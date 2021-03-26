@@ -1,0 +1,16 @@
+{
+	"placa": "ABC2503",
+	"pessoa": "Zé Roberto",
+	"material": "Guilhotina",
+	"peso": "8001",
+	"id_pesagem": 125,
+	"data_pesagem": {
+		"dia": "25",
+		"mes": "3",
+		"ano": "2021",
+		"hora": "21",
+		"minuto": "8",
+		"segundo": "52",
+		"string": "25-3-2021 21h8min52s"
+	}
+}

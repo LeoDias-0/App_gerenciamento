@@ -1,0 +1,15 @@
+Aluminum
+Cobalt
+Cast iron
+Cast steel
+Gold
+Nickel
+Niobium
+Platinum
+Silver
+Steel
+Titanium
+Tungsten
+Zinc
+Zirconium
+Guilhotina
