@@ -3,99 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
-    <title>Calling Pytdon from Electron!</title>
+    <title>Balança Cambirela</title>
 </head>
 <body style="background-color: rgb(220, 220, 220);">
     <div style="top: 0%; bottom: 0%; left: 0%; right: 0%; position: absolute">
+        <!-- Menus -->
         <div style="left: 0%; right: 93%; display: inline-block; top: 0%; bottom: 0%; position: absolute">
             <div class="vertical-menu">
-                <a href="janelas/pesagens fechadas/pesagens fechadas.html" id="pesagens-fechadas" class="active">Pesagens Fechadas</a>
-                <a href="janelas/pesagens abertas/pesagens_abertas.html" id="pesagens-abertas">Pesagens Abertas</a>
-                <a href="janelas/em lancamento/em_lancamento.html" id="em-lancamento">Em Lançamento</a>
-                <a href="#" id="edicao-de-pesagens">Edição de Pesagens</a>
-                <a href="#" id="configuracoes">Configurações</a>
+                <div id="pesagens-fechadas" class="active">Pesagens Fechadas</div>
+                <div href="janelas/pesagens abertas/pesagens_abertas.html" id="pesagens-abertas">Pesagens Abertas</div>
+                <div href="janelas/em lancamento/em_lancamento.html" id="em-lancamento">Em Lançamento</div>
+                <div href="#" id="edicao-de-pesagens">Edição de Pesagens</div>
+                <div href="#" id="configuracoes">Configurações</div>
             </div>
         </div>
-        <div style="left: 7%; right: 60%; display: inline-block; top: 0%; bottom: 0%; position: absolute">
-            <form autocomplete="off">
-                <table style="margin: 0 auto">
-                    <tr>
-                        <td class="label_form">
-                            <label>Placa:</label>
-                        </td>
-                        <td>
-                            <div class="autocomplete">
-                                <input id="placa" class="input_form" type="text" onkeyup="go_to_cell_on_enter(event, pessoa_cell);"></input>
-                            </div>
-                        </td>
-                        <td>
-                            <button id="adicionar_placa" type="button">
+        
+        <div id="conteudo_principal" style="left: 7%; right: 0%; top: 0%; bottom: 0%; position: absolute">
+            <!-- Local de inputs da pesagem -->
+            <div style="left: 0%; right: 63%; display: inline-block; top: 0%; bottom: 0%; position: absolute">
+                <form autocomplete="off">
+                    <table style="margin: 0 auto">
+                        <tr>
+                            <td class="label_form">
+                                <label>Placa:</label>
+                            </td>
+                            <td>
+                                <div class="autocomplete">
+                                    <input id="placa" class="input_form" type="text" onkeyup="go_to_cell_on_enter(event, pessoa_cell);"></input>
+                                </div>
+                            </td>
+                            <td>
+                                <button id="adicionar_placa" type="button">
 
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label_form">
-                            <label>Pessoa:</label>
-                        </td>
-                        <td>
-                            <div class="autocomplete">
-                                <input id="pessoa" class="input_form" type="text" onkeyup="go_to_cell_on_enter(event, material_cell);"></input>
-                            </div>
-                        </td>
-                        <td>
-                            <button id="adicionar_nome" type="button">
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label_form">
+                                <label>Pessoa:</label>
+                            </td>
+                            <td>
+                                <div class="autocomplete">
+                                    <input id="pessoa" class="input_form" type="text" onkeyup="go_to_cell_on_enter(event, material_cell);"></input>
+                                </div>
+                            </td>
+                            <td>
+                                <button id="adicionar_nome" type="button">
 
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label_form">
-                            <label>Material:</label>
-                        </td>
-                        <td>
-                            <div class="autocomplete">
-                                <input id="material" class="input_form" type="text" onkeyup="go_to_cell_on_enter(event, peso_cell);"></input>
-                            </div>
-                        </td>
-                        <td>
-                            <button id="adicionar_material" type="button">
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label_form">
+                                <label>Material:</label>
+                            </td>
+                            <td>
+                                <div class="autocomplete">
+                                    <input id="material" class="input_form" type="text" onkeyup="go_to_cell_on_enter(event, peso_cell);"></input>
+                                </div>
+                            </td>
+                            <td>
+                                <button id="adicionar_material" type="button">
 
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label_form">
-                            <label>Peso:</label>
-                        </td>
-                        <td>
-                            <div class="autocomplete">
-                                <input id="peso" class="input_form" type="text"></input>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </form>
-            <div style="position: relative">
-                <div style="background-color: darkcyan; position: absolute; margin-top: 5%; left: 50%; transform: translate(-50%, 0%)">
-                    <button id="pesar_botao">Pesar</button>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label_form">
+                                <label>Peso:</label>
+                            </td>
+                            <td>
+                                <div class="autocomplete">
+                                    <input id="peso" class="input_form" type="text"></input>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <div style="position: relative">
+                    <div style="background-color: darkcyan; position: absolute; margin-top: 5%; left: 50%; transform: translate(-50%, 0%)">
+                        <button id="pesar_botao">Pesar</button>
+                    </div>
                 </div>
             </div>
-        
-        </div>
 
-        <div style="left: 40%; right: 55%; display: inline-block; top: 0%; bottom: 0%; position: absolute">
+            <!-- Espaço em branco -->
+            <div style="left: 37%; right: 51%; display: inline-block; top: 0%; bottom: 0%; position: absolute">
+            </div>
 
-        </div>
-
-        <div style="left: 45%; right:0%; top: 0%; bottom: 0%; position: absolute;">
-            <div id="tickets" style="position: absolute; right: 0%; left: 0%; display: flex; flex-wrap: wrap;">
-                
+            <!-- Espaço dos tickets -->
+            <div style="left: 41%; right:0%; top: 0%; bottom: 0%; position: absolute;">
+                <div id="tickets" style="position: absolute; right: 0%; left: 0%; display: flex; flex-wrap: wrap;">
+                    
+                </div>
             </div>
         </div>
+        
     </div>
 
-
+    <!-- Modal -->
     <div id="modal_adicionar_placa" class="modal_adicionar">
         <div id="modal_adicionar_placa_conteudo" class="modal_adicionar_conteudo">
             <input type="text" id="input_adicionar_placa" class="input_adicionar"></input>
@@ -104,6 +110,7 @@
         </div>
     </div>
 
+    <!-- Modal -->
     <div id="modal_adicionar_nome" class="modal_adicionar">
         <div id="modal_adicionar_nome_conteudo" class="modal_adicionar_conteudo">
             <input type="text" id="input_adicionar_nome" class="input_adicionar"></input>
@@ -112,6 +119,7 @@
         </div>
     </div>
     
+    <!-- Modal -->
     <div id="modal_adicionar_material" class="modal_adicionar">
         <div id="modal_adicionar_material_conteudo" class="modal_adicionar_conteudo">
             <input type="text" id="input_adicionar_material" class="input_adicionar"></input>
@@ -121,7 +129,7 @@
     </div>
 
     <script src="renderer.js"></script>
-    
+    <script src="pesagens_fechadas_main.js"></script>
 
 </body>
 </html>

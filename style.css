@@ -1,3 +1,13 @@
+/*Adicionar bordas nas divs - testes*/
+/*
+div {
+    border-radius: 1mm;
+    border-color: #4CAF50;
+    border-style: dashed;
+}
+*/
+
+
 td.label_form {
     /* Revisto */
     font-size: large;
@@ -153,7 +163,7 @@ button#pesar_botao {
     margin-right: auto 0; /* Set a width if you like */
 }
 
-.vertical-menu a {
+.vertical-menu div {
     background-color: #eee; /* Grey background color */
     color: black; /* Black text color */
     display: block; /* Make the links appear below each other */
@@ -162,11 +172,11 @@ button#pesar_botao {
     height: 1.5cm;
 }
 
-.vertical-menu a:hover {
+.vertical-menu div:hover {
     background-color: #ccc; /* Dark grey background on mouse-over */
 }
 
-.vertical-menu a.active {
+.vertical-menu div.active {
     background-color: #4CAF50; /* Add a green color to the "active/current" link */
     color: white;
 }
