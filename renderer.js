@@ -1,6 +1,3 @@
-
-// eai tiago
-
 //  O----------------------------------------O
 //  | renderer.js é executado pelo navegador |
 //  O----------------------------------------O
@@ -864,6 +861,15 @@ function limpar_celulas() {
     peso_cell.value = ''
 }
 
+
+//  x------------------------------x
+//  | Funções relacionadas ao menu |
+//  x------------------------------x
+
+// TODO: Completar isso aqui hein
+function load_tab(tab_to_load) {
+    // Carrega o tab de um dos menus
+}
 
 
 //  O-------------------------------------O
