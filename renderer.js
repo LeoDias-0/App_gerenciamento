@@ -71,24 +71,6 @@ function ler_dados_gravados() {
     materiais = fs.readFileSync(cadastro_PATH + 'Materiais\\materiais.txt', 'utf-8').split('\n').filter(Boolean)
 }
 
-// Essa function vai para o cemitério
-function ler_dados_gravados_py() {
-    options = {
-        mode: 'json',
-    }
-
-    pyshell.run('ler_dados_gravados.py', options, function (err, results) {
-        if (err) throw err
-
-        dados_cadastros = results[0]
-
-        pessoas = dados_cadastros[0]
-        placas = dados_cadastros[1]
-        materiais = dados_cadastros[2]
-    })
-}
-
-
 function time_pesagem(dados_pesagem) {
     dt = new Date()
 
@@ -156,24 +138,6 @@ function remover_pesagem_fechada_da_pasta_pesagens_abertas(id_pesagem_a_ser_excl
         if (file.includes('id=' + String(id_pesagem_a_ser_excluida))) pesagem_path = file
     })
     fs.unlinkSync(pesagens_abertas_folder + pesagem_path)
-}
-
-
-function fechar_pesagem_py(args_value, id_pesagem) {
-    temp = id_pesagem.toString()
-    args_value = args_value.concat([temp])
-
-    options = {
-        mode: 'text',
-        args: args_value
-    }
-
-    pyshell.run('fechar_pesagem.py', options, function (err, results) {
-        if (err) throw err
-        // alert(results)
-
-    }
-    )
 }
 
 function get_pesagem_aberta_by_id(id_pesagem_aberta) {
@@ -724,103 +688,6 @@ function adicionar_ticket_pesagem(args_value) {
     b.appendChild(close_btn)
     b.appendChild(pin_btn)
     b.appendChild(finalize_btn)
-
-}
-
-
-// Antiga função que adiciona o ticket
-function adicionar_ticket_pesagem_antiga2(args_value) {
-    div_tickets = document.getElementById("tickets")
-    b = document.createElement("DIV")
-
-    b.setAttribute('id', numero_de_pesagens.toString())
-    b.setAttribute('class', 'tickets_nao_selecionados')
-    b.setAttribute("style", "width: 130px; height: 200px; cursor: pointer;")
-
-    b.addEventListener("click", function () {
-        esta_pesagem_ja_esta_selecionada = id_pesagem_em_questao == this.id
-
-        if (lidando_com_pesagem_aberta && esta_pesagem_ja_esta_selecionada) {
-            lidando_com_pesagem_aberta = false
-            document.getElementById(id_pesagem_em_questao).setAttribute('class', 'tickets_nao_selecionados')
-            console.log('pesagem aberta e selecionada')
-        } else {
-            if (lidando_com_pesagem_aberta){
-                document.getElementById(id_pesagem_em_questao).setAttribute('class', 'tickets_nao_selecionados')
-            }
-
-            lidando_com_pesagem_aberta = true
-            id_pesagem_em_questao = this.id
-    
-            document.getElementById(id_pesagem_em_questao).setAttribute('class', 'ticket_selecionado')
-    
-            placa_cell.value = args_value[0]
-            pessoa_cell.value = args_value[1]
-            material_cell.value = args_value[2]
-    
-            peso_cell.focus()
-            peso_cell.select()
-        }
-
-    })
-
-    b.innerHTML = ''
-    for (let i = 0; i < 4; i++) {
-        b.innerHTML += args_value[i]
-        b.innerHTML += '<br>'
-    }
-
-    intermediate_div = document.createElement('div')
-
-    intermediate_div.setAttribute('style', 'padding-bottom: 0.3cm; padding-right: 0.3cm;')
-
-    intermediate_div.appendChild(b)
-    if (div_tickets.childNodes.length == 0) {
-        div_tickets.appendChild(intermediate_div)
-    } else {
-        div_tickets.insertBefore(intermediate_div, div_tickets.childNodes[0])
-    }
-
-}
-
-// Antiga função que adiciona o ticket
-function adicionar_ticket_pesagem_antiga(args_value) {
-    div_tickets = document.getElementById("tickets")
-    b = document.createElement("DIV")
-
-    b.setAttribute('id', numero_de_pesagens.toString())
-    b.setAttribute('class', 'tickets_nao_selecionados')
-    b.setAttribute("style", "width: 130px; height: 200px; cursor: pointer;")
-
-    b.addEventListener("click", function () {
-        if (lidando_com_pesagem_aberta) {
-            document.getElementById(id_pesagem_em_questao).setAttribute('class', 'tickets_nao_selecionados')
-        }
-
-        lidando_com_pesagem_aberta = true
-        id_pesagem_em_questao = this.id
-
-        document.getElementById(id_pesagem_em_questao).setAttribute('class', 'ticket_selecionado')
-
-
-        placa_cell.value = args_value[0]
-        pessoa_cell.value = args_value[1]
-        material_cell.value = args_value[2]
-
-        peso_cell.focus()
-        peso_cell.select()
-    })
-
-    b.innerHTML = ''
-    for (let i = 0; i < 4; i++) {
-        b.innerHTML += args_value[i]
-        b.innerHTML += '<br>'
-    }
-    if (div_tickets.childNodes.length == 0) {
-        div_tickets.appendChild(b)
-    } else {
-        div_tickets.insertBefore(b, div_tickets.childNodes[0])
-    }
 
 }
 
