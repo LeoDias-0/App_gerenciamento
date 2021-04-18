@@ -11,8 +11,6 @@
 //  | Importando módulos externos |
 //  O-----------------------------O
 
-var pyshell = require('python-shell') // importando o pacote pra rodar comandos Python
-
 const fs = require('fs') // importando o pacote filesystem (escrever/ler arquivos)
 //  Aqui tá a mágica, em uma aplicação web normal a página html não pode escrever/ler arquivos no seu computador
 //  por uma questão de segurança. Aqui o electron permite isso pois o servidor é o próprio computador.
@@ -24,31 +22,15 @@ const fs = require('fs') // importando o pacote filesystem (escrever/ler arquivo
 //  | Declarando constantes e variáveis globais |
 //  O-------------------------------------------O
 
-let input = document.querySelector('#input')
+div_conteudo_principal = document.querySelector("#conteudo_principal")
 
-let result = document.querySelector('#result')
+botao_balanca = document.querySelector('#balanca')
 
-let btn = document.querySelector('#btn')
+botao_pesagens_fechadas = document.querySelector("#pesagens-fechadas")
 
 let lidando_com_pesagem_aberta = false
 
 let id_pesagem_em_questao = null
-
-let placa_cell = document.querySelector('#placa')
-
-let pessoa_cell = document.querySelector('#pessoa')
-
-let material_cell = document.querySelector('#material')
-
-let peso_cell = document.querySelector('#peso')
-
-let pesar_botao = document.querySelector('#pesar_botao')
-
-let adc_placa_botao = document.querySelector('#adicionar_placa')
-
-let adc_nome_botao = document.querySelector('#adicionar_nome')
-
-let adc_material_botao = document.querySelector('#adicionar_material')
 
 let numero_de_pesagens = 1
 
@@ -867,8 +849,13 @@ function limpar_celulas() {
 //  x------------------------------x
 
 // TODO: Completar isso aqui hein
+// Pelo visto não é muito viável colocar um fetch dentro de um função
 function load_tab(tab_to_load) {
-    // Carrega o tab de um dos menus
+    // Dessa forma está retornando uma Promise
+    // por isso ainda precisamos de um 'then'
+    return fetch(tab_to_load).then(
+        response => response.text()
+    )
 }
 
 
@@ -881,67 +868,8 @@ carregar_variaveis_do_sistema()
 
 ler_dados_gravados()
 
-carregar_tickets_para_pesagens_abertas()
+load_tab('menu0_balanca.html')
+    .then(text => body_string_balanca = text)
 
-autocomplete_placa(document.getElementById("placa"))
-
-autocomplete_pessoa(document.getElementById("pessoa"))
-
-autocomplete_material(document.getElementById("material"))
-
-
-pesar_botao.addEventListener('click', () => {
-    data_values = {
-        placa: placa_cell.value,
-        pessoa: pessoa_cell.value,
-        material: material_cell.value,
-        peso: peso_cell.value,
-        id_pesagem: numero_de_pesagens
-    }
-    if (lidando_com_pesagem_aberta) {
-        lidando_com_pesagem_aberta = false
-        document.getElementById(id_pesagem_em_questao).parentElement.outerHTML = ''
-
-        data_values.id_pesagem = id_pesagem_em_questao
-
-        data_values = time_pesagem(data_values)
-
-        pesagem_fechada_completa = fechar_pesagem(data_values)
-
-        gravar_pesagem_fechamento(pesagem_fechada_completa)
-
-        remover_pesagem_fechada_da_pasta_pesagens_abertas(id_pesagem_em_questao)
-    } else {
-        data_values = time_pesagem(data_values)
-
-        gravar_pesagem(data_values)
-
-        adicionar_ticket_pesagem(data_values)
-
-        numero_de_pesagens++
-        escrever_variaveis_do_sistema()
-    }
-    limpar_celulas()
-})
-
-
-adc_placa_botao.addEventListener('click', () => {
-    modal_placa = document.querySelector('#modal_adicionar_placa')
-    modal_placa_context = document.querySelector('#input_adicionar_placa')
-    modal_placa_context.value = placa_cell.value
-    modal_placa.style.display = 'block'
-})
-
-adc_nome_botao.addEventListener('click', () => {
-    modal_nome = document.querySelector('#modal_adicionar_nome')
-    modal_nome_context = document.querySelector('#input_adicionar_nome')
-    modal_nome_context.value = pessoa_cell.value
-    modal_nome.style.display = 'block'
-})
-
-adc_material_botao.addEventListener('click', () => {
-    modal_material = document.querySelector('#modal_adicionar_material')
-    modal_material_context = document.querySelector('#input_adicionar_material')
-    modal_material_context.value = material_cell.value
-    modal_material.style.display = 'block'
-})
+load_tab('menu1_pesagens_fechadas.html')
+    .then(text => body_string_pesagens_fechadas = text)

@@ -1,19 +1,4 @@
 
-botao_pesagens_fechadas = document.querySelector("#pesagens-fechadas")
-div_conteudo_principal = document.querySelector("#conteudo_principal")
-body_string = ''
-
-// TODO: Entender promises \/
-// fetch é um tipo de promise
-fetch('menu1_pesagens_fechadas.html')
-    .then(function(response) {
-        return response.text()
-    })
-    .then(function(body) {
-        body_string = body
-    })
-
-
 carregar_pesagens = (filtros) => {
 
     // filtro do tipo de pesagem
@@ -160,12 +145,11 @@ get_filtro = () => {
     return filtro
 }
     
-
-botao_pesagens_fechadas.addEventListener('click', () => {
+click_botao_pesagens_fechadas = () => {
     
     // Apague os elementos da página antiga, não é necessário, mas é para deixar mais claro
     div_conteudo_principal.innerHTML = ''
-    div_conteudo_principal.innerHTML = body_string
+    div_conteudo_principal.innerHTML = body_string_pesagens_fechadas
 
     ja_existem_dados_carregados = false
     document.querySelector('#carregar_btn').addEventListener('click', () => {
@@ -196,5 +180,6 @@ botao_pesagens_fechadas.addEventListener('click', () => {
         Lembrar de fazer o carregamento do HTML antes de ser utilizado o clique do botão, para que não seja
         necessário o carregamento e leitura do html toda vez que apertar o botão
     */
+}
 
-})
+botao_pesagens_fechadas.addEventListener('click', click_botao_pesagens_fechadas)
