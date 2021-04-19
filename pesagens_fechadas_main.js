@@ -147,9 +147,15 @@ get_filtro = () => {
     
 click_botao_pesagens_fechadas = () => {
     
+    [...document.getElementById('menu').children].forEach((botao) => {
+        botao.classList.remove('active')
+    })
+    botao_pesagens_fechadas.className = 'active'
     // Apague os elementos da página antiga, não é necessário, mas é para deixar mais claro
     div_conteudo_principal.innerHTML = ''
     div_conteudo_principal.innerHTML = body_string_pesagens_fechadas
+
+    // TODO: Adicionar o autocomplete nos campos de busca
 
     ja_existem_dados_carregados = false
     document.querySelector('#carregar_btn').addEventListener('click', () => {
@@ -166,9 +172,9 @@ click_botao_pesagens_fechadas = () => {
 
     // Carregue os elementos da página de pesagens fechadas
 
-    // TODO: Carregar a tag style
+    // DONE: Carregar a tag style
 
-    // TODO: Carregar as funcionalidades (tag script do arquivo 'pesagens_fechadas_script.js' para o corrente arquivo)
+    // DONE: Carregar as funcionalidades (tag script do arquivo 'pesagens_fechadas_script.js' para o corrente arquivo)
 
     // TODO: Implementar um botão que redireciona para a balança no Menu
     

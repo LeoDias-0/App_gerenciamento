@@ -1,5 +1,13 @@
 
 click_botao_balanca = () => {
+    // o método .children retorn um HTML Collection ao invés de um array
+    // por isso utilizamos o spread operator aqui, transformando em um array
+    // para usar o forEach
+    [...document.getElementById('menu').children].forEach((botao) => {
+        botao.classList.remove('active')
+    })
+    botao_balanca.className = 'active'
+    
     div_conteudo_principal.innerHTML = ''
     div_conteudo_principal.innerHTML = body_string_balanca
 
@@ -21,11 +29,19 @@ click_botao_balanca = () => {
 
     carregar_tickets_para_pesagens_abertas()
 
-    autocomplete_placa(document.getElementById("placa"))
+    // O autocomplete está funcionando(?!) sem a necessidade de criar uma
+    // função pra cada input
+    autocomplete(document.getElementById("placa"), placas)
 
-    autocomplete_pessoa(document.getElementById("pessoa"))
+    autocomplete(document.getElementById("pessoa"), pessoas)
 
-    autocomplete_material(document.getElementById("material"))
+    autocomplete(document.getElementById("material"), materiais)
+
+    // autocomplete_placa(document.getElementById("placa"))
+
+    // autocomplete_pessoa(document.getElementById("pessoa"))
+
+    // autocomplete_material(document.getElementById("material"))
 
 
     pesar_botao.addEventListener('click', () => {
