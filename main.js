@@ -11,8 +11,16 @@ const {app, BrowserWindow} = require('electron')
 
 
 function createWindow() {
-    win = new BrowserWindow({width: 1000, height: 800, show: false})
-
+    win = new BrowserWindow({
+        width: 1000,
+        height: 800,
+        show: false,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false,
+        }
+    })
+    
     win.loadFile('index.html')
 
     win.once('ready-to-show', () => {

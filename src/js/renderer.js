@@ -735,8 +735,8 @@ carregar_variaveis_do_sistema()
 
 ler_dados_gravados()
 
-load_tab('menu0_balanca.html')
+load_tab('./src/html/menu0_balanca.html')
     .then(text => body_string_balanca = text)
 
-load_tab('menu1_pesagens_fechadas.html')
+load_tab('./src/html/menu1_pesagens_fechadas.html')
     .then(text => body_string_pesagens_fechadas = text)
