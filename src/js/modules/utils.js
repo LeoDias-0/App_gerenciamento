@@ -1,32 +1,11 @@
-//  O----------------------------------------O
-//  | renderer.js é executado pelo navegador |
-//  O----------------------------------------O
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-//  'renderer.js' é um script em 'index.html' que é executado pelo navegador
-//  do electron, ou seja é um código que roda no client side.
-//  Em teoria não é legal deixar os códigos importantes ser executado no lado do cliente
-//  mas o Electron dá essa liberdade.
+import Ticket from '../../react_js/components/Ticket'
 
-//  O-----------------------------O
-//  | Importando módulos externos |
-//  O-----------------------------O
+import {div_conteudo_principal} from '../modules/global'
 
-const fs = require('fs') // importando o pacote filesystem (escrever/ler arquivos)
-//  Aqui tá a mágica, em uma aplicação web normal a página html não pode escrever/ler arquivos no seu computador
-//  por uma questão de segurança. Aqui o electron permite isso pois o servidor é o próprio computador.
-//  Caso não fosse o cliente (página html) deveria mandar uma requisição para o servidor (Node) para que o Node
-//  faça esse tipo de operação no servidor.
-
-
-//  O-------------------------------------------O
-//  | Declarando constantes e variáveis globais |
-//  O-------------------------------------------O
-
-div_conteudo_principal = document.querySelector("#conteudo_principal")
-
-botao_balanca = document.querySelector('#balanca')
-
-botao_pesagens_fechadas = document.querySelector("#pesagens-fechadas")
+const fs = require('fs')
 
 let lidando_com_pesagem_aberta = false
 
@@ -48,38 +27,41 @@ let dados_cadastros = {}
 
 
 
-function carregar_variaveis_do_sistema() {
-    raw_data = fs.readFileSync('variables\\variaveis.json')
+export function carregar_variaveis_do_sistema() {
+    console.log('This function is working!')
+    let raw_data = fs.readFileSync('variables\\variaveis.json')
     numero_de_pesagens = JSON.parse(raw_data).numero_de_pesagens
 }
 
 
-function escrever_variaveis_do_sistema() {
-    data = {}
+export function escrever_variaveis_do_sistema() {
+    let data = {}
     data.numero_de_pesagens = numero_de_pesagens
     fs.writeFileSync('variables\\variaveis.json', JSON.stringify(data))
 }
 
 
-function ler_dados_gravados() {
-    cadastro_PATH = 'dados\\Cadastros\\'
+export function ler_dados_gravados() {
+    let cadastro_PATH = 'dados\\Cadastros\\'
 
     pessoas = fs.readFileSync(cadastro_PATH + 'Clientes\\nomes.txt', 'utf-8').split('\n').filter(Boolean)
 
     placas = fs.readFileSync(cadastro_PATH + 'Placas\\placas.txt', 'utf-8').split('\n').filter(Boolean)
 
     materiais = fs.readFileSync(cadastro_PATH + 'Materiais\\materiais.txt', 'utf-8').split('\n').filter(Boolean)
+
+    return {pessoas, placas, materiais}
 }
 
-function time_pesagem(dados_pesagem) {
-    dt = new Date()
+export function time_pesagem(dados_pesagem) {
+    let dt = new Date()
 
-    dia = String(dt.getDate())
-    mes = String(dt.getMonth() + 1)
-    ano = String(dt.getFullYear())
-    hora = String(dt.getHours())
-    minuto = String(dt.getMinutes())
-    segundo = String(dt.getSeconds())
+    let dia = String(dt.getDate())
+    let mes = String(dt.getMonth() + 1)
+    let ano = String(dt.getFullYear())
+    let hora = String(dt.getHours())
+    let minuto = String(dt.getMinutes())
+    let segundo = String(dt.getSeconds())
 
     dados_pesagem.data_pesagem = {
         dia: dia,
@@ -91,75 +73,75 @@ function time_pesagem(dados_pesagem) {
     }
     
 
-    string_date = dia + '-' + mes + '-' + ano
-    string_time = hora + 'h' + minuto + 'min' + segundo + 's'
+    let string_date = dia + '-' + mes + '-' + ano
+    let string_time = hora + 'h' + minuto + 'min' + segundo + 's'
 
     dados_pesagem.data_pesagem.string = string_date + ' ' + string_time
 
     return dados_pesagem
 }
 
-function gravar_pesagem(timed_dados_pesagem) {
+export function gravar_pesagem(timed_dados_pesagem) {
     
-    path_pesagens_abertas = './dados/Pesagens Abertas/'
+    let path_pesagens_abertas = './dados/Pesagens Abertas/'
 
-    filename_pesagem = timed_dados_pesagem.pessoa + ' '
+    let filename_pesagem = timed_dados_pesagem.pessoa + ' '
     filename_pesagem += timed_dados_pesagem.data_pesagem.string + ' id='
     filename_pesagem += timed_dados_pesagem.id_pesagem + '.json'
 
-    to_be_write = JSON.stringify(timed_dados_pesagem, null, '\t')
+    let to_be_write = JSON.stringify(timed_dados_pesagem, null, '\t')
 
     fs.writeFile(path_pesagens_abertas + filename_pesagem, to_be_write, (err) => {
         if (err) throw err
     })
 }
 
-function gravar_pesagem_fechamento(timed_dados_pesagem) {
+export function gravar_pesagem_fechamento(timed_dados_pesagem) {
     
-    path_pesagens_fechadas = './dados/Pesagens Fechadas/'
+    let path_pesagens_fechadas = './dados/Pesagens Fechadas/'
     // São necessárias apenas os dados de fechamento para o filename
-    dados_do_fechamento = timed_dados_pesagem.fechamento_da_pesagem
+    let dados_do_fechamento = timed_dados_pesagem.fechamento_da_pesagem
 
-    filename_pesagem = dados_do_fechamento.pessoa + ' '
+    let filename_pesagem = dados_do_fechamento.pessoa + ' '
     filename_pesagem += dados_do_fechamento.data_pesagem.string + ' id='
     filename_pesagem += dados_do_fechamento.id_pesagem + '.json'
 
-    to_be_write = JSON.stringify(timed_dados_pesagem, null, '\t')
+    let to_be_write = JSON.stringify(timed_dados_pesagem, null, '\t')
 
     fs.writeFile(path_pesagens_fechadas + filename_pesagem, to_be_write, (err) => {
         if (err) throw err
     })
 }
 
-function remover_pesagem_fechada_da_pasta_pesagens_abertas(id_pesagem_a_ser_excluida) {
-    pesagens_abertas_folder = 'dados\\Pesagens Abertas\\'
-    pesagem_path = ''
+export function remover_pesagem_fechada_da_pasta_pesagens_abertas(id_pesagem_a_ser_excluida) {
+    let pesagens_abertas_folder = 'dados\\Pesagens Abertas\\'
+    let pesagem_path = ''
     fs.readdirSync(pesagens_abertas_folder).forEach( (file) => {
         if (file.includes('id=' + String(id_pesagem_a_ser_excluida))) pesagem_path = file
     })
     fs.unlinkSync(pesagens_abertas_folder + pesagem_path)
 }
 
-function get_pesagem_aberta_by_id(id_pesagem_aberta) {
-    pesagens_abertas_folder = 'dados\\Pesagens Abertas\\'
+export function get_pesagem_aberta_by_id(id_pesagem_aberta) {
+    let pesagens_abertas_folder = 'dados\\Pesagens Abertas\\'
 
-    pesagem_path = ''
+    let pesagem_path = ''
     fs.readdirSync(pesagens_abertas_folder).forEach( (file) => {
         if (file.includes('id=' + String(id_pesagem_aberta))) pesagem_path = file
     })
 
-    raw_data = fs.readFileSync(pesagens_abertas_folder + pesagem_path)
-    abertura_da_pesagem = JSON.parse(raw_data)
+    let raw_data = fs.readFileSync(pesagens_abertas_folder + pesagem_path)
+    let abertura_da_pesagem = JSON.parse(raw_data)
 
     return abertura_da_pesagem
 }
 
-function fechar_pesagem(timed_dados_pesagem) {
-    id_da_pesagem_a_se_fechar = timed_dados_pesagem.id_pesagem
+export function fechar_pesagem(timed_dados_pesagem) {
+    let id_da_pesagem_a_se_fechar = timed_dados_pesagem.id_pesagem
 
-    abertura_da_pesagem = get_pesagem_aberta_by_id(id_da_pesagem_a_se_fechar)
+    let abertura_da_pesagem = get_pesagem_aberta_by_id(id_da_pesagem_a_se_fechar)
 
-    pesagem_completa = {
+    let pesagem_completa = {
         abertura_da_pesagem: abertura_da_pesagem,
         fechamento_da_pesagem: timed_dados_pesagem
     }
@@ -168,7 +150,7 @@ function fechar_pesagem(timed_dados_pesagem) {
 }
 
 
-function close_all_autocomplete_items() {
+export function close_all_autocomplete_items() {
     /*close all autocomplete lists in the document,
     except the one passed as an argument:*/
     var x = document.getElementsByClassName("autocomplete-items")
@@ -180,7 +162,7 @@ function close_all_autocomplete_items() {
 
 //  Essa função está sendo chamada direto do html
 //  mudar isso mais tarde
-function go_to_cell_on_enter(event, cell) {
+export function go_to_cell_on_enter(event, cell) {
     var key = event.keyCode || event.which
     if (key == 13) {
         cell.focus()
@@ -193,7 +175,7 @@ function go_to_cell_on_enter(event, cell) {
 // Antiga função autocomplete
 // foram criadas outras, uma pra cada slot
 // Está desnecessariamente complicada
-function autocomplete(inp, arr) {
+export function autocomplete(inp, arr) {
     /*the autocomplete function takes two arguments,
     the text field element and an array of possible autocompleted values:*/
     var currentFocus;
@@ -603,16 +585,17 @@ function autocomplete_material(inp) {
 
 // Cria um elemento html que representa um ticket e adiciona no DOM
 // Muito complicada também, dá pra refatorar(deixar mais modular, talvez criar um 'objeto' ticket)
-function adicionar_ticket_pesagem(args_value) {
-    div_tickets = document.getElementById("tickets")
-    b = document.createElement("DIV")
+export function adicionar_ticket_pesagem(args_value) {
+
+    let div_tickets = document.getElementById("tickets")
+    let b = document.createElement("DIV")
 
     b.setAttribute('id', args_value.id_pesagem)
     b.setAttribute('class', 'tickets_nao_selecionados')
     b.setAttribute("style", "position: relative; width: 130px; height: 200px; cursor: pointer;")
 
     b.addEventListener("click", function () {
-        esta_pesagem_ja_esta_selecionada = id_pesagem_em_questao == this.id
+        let esta_pesagem_ja_esta_selecionada = id_pesagem_em_questao == this.id
 
         if (lidando_com_pesagem_aberta && esta_pesagem_ja_esta_selecionada) {
             lidando_com_pesagem_aberta = false
@@ -628,12 +611,12 @@ function adicionar_ticket_pesagem(args_value) {
     
             document.getElementById(id_pesagem_em_questao).setAttribute('class', 'ticket_selecionado')
     
-            placa_cell.value = args_value.placa
-            pessoa_cell.value = args_value.pessoa
-            material_cell.value = args_value.material
+            document.querySelector('#placa').value = args_value.placa
+            document.querySelector('#pessoa').value = args_value.pessoa
+            document.querySelector('#material').value = args_value.material
     
-            peso_cell.focus()
-            peso_cell.select()
+            document.querySelector('#peso').focus()
+            document.querySelector('#peso').select()
         }
 
     })
@@ -644,7 +627,7 @@ function adicionar_ticket_pesagem(args_value) {
     b.innerHTML += args_value.material + '<br>'
     b.innerHTML += args_value.peso + '<br>'
 
-    intermediate_div = document.createElement('div')
+    let intermediate_div = document.createElement('div')
 
     intermediate_div.setAttribute('style', 'padding-bottom: 0.3cm; padding-right: 0.3cm;')
 
@@ -656,7 +639,7 @@ function adicionar_ticket_pesagem(args_value) {
     }
 
 
-    close_btn = document.createElement('div')
+    let close_btn = document.createElement('div')
     close_btn.classList.add('tickets_mini_buttons')
     close_btn.classList.add('ticket_close_button')
 
@@ -665,7 +648,7 @@ function adicionar_ticket_pesagem(args_value) {
         alert('Close button pressed!')
     })
 
-    pin_btn = document.createElement('div')
+    let pin_btn = document.createElement('div')
     pin_btn.classList.add('tickets_mini_buttons')
     pin_btn.classList.add('ticket_pin_button')
 
@@ -675,7 +658,7 @@ function adicionar_ticket_pesagem(args_value) {
         alert('Pin button pressed!')
     })
 
-    finalize_btn = document.createElement('div')
+    let finalize_btn = document.createElement('div')
     finalize_btn.classList.add('tickets_mini_buttons')
     finalize_btn.classList.add('ticket_finalize_button')
 
@@ -688,26 +671,27 @@ function adicionar_ticket_pesagem(args_value) {
     b.appendChild(close_btn)
     b.appendChild(pin_btn)
     b.appendChild(finalize_btn)
+    
 
 }
 
 //  Lê no sistema as pesagens que estão abertas e carrega um ticket para cada uma delas
-function carregar_tickets_para_pesagens_abertas() {
+export function carregar_tickets_para_pesagens_abertas() {
     fs.readdirSync('dados\\Pesagens Abertas').forEach((file) => {
-        raw_data_pesagem = fs.readFileSync('dados\\Pesagens Abertas\\' + file)
+        let raw_data_pesagem = fs.readFileSync('dados\\Pesagens Abertas\\' + file)
 
-        pesagem = JSON.parse(raw_data_pesagem)
+        let pesagem = JSON.parse(raw_data_pesagem)
 
         adicionar_ticket_pesagem(pesagem)
     })
 }
 
 
-function limpar_celulas() {
-    placa_cell.value = ''
-    pessoa_cell.value = ''
-    material_cell.value = ''
-    peso_cell.value = ''
+export function limpar_celulas() {
+    document.querySelector('#pessoa').value = ''
+    document.querySelector('#material').value = ''
+    document.querySelector('#placa').value = ''
+    document.querySelector('#peso').value = ''
 }
 
 
@@ -717,7 +701,7 @@ function limpar_celulas() {
 
 // TODO: Completar isso aqui hein
 // Pelo visto não é muito viável colocar um fetch dentro de um função
-function load_tab(tab_to_load) {
+export function load_tab(tab_to_load) {
     // Dessa forma está retornando uma Promise
     // por isso ainda precisamos de um 'then'
     return fetch(tab_to_load).then(
@@ -726,17 +710,146 @@ function load_tab(tab_to_load) {
 }
 
 
-//  O-------------------------------------O
-//  | A partir daqui o código é executado |
-//  O-------------------------------------O
+export let carregar_pesagens = (filtros) => {
 
+    // filtro do tipo de pesagem
+    // decidir o path correto
+    let path_pasta = 'dados\\' + filtros.tipo_da_pesagem
+    
+    // percorrer pesagens
+    fs.readdirSync(path_pasta).forEach((file) => {
 
-carregar_variaveis_do_sistema()
+        let raw_data_pesagem = fs.readFileSync(path_pasta + '\\' + file)
 
-ler_dados_gravados()
+        let pesagem = JSON.parse(raw_data_pesagem)
 
-load_tab('./src/html/menu0_balanca.html')
-    .then(text => body_string_balanca = text)
+        // filtrar pesagens
+        let deve_ser_exibido = pesagem_satisfaz_filtros(pesagem, filtros)
 
-load_tab('./src/html/menu1_pesagens_fechadas.html')
-    .then(text => body_string_pesagens_fechadas = text)
+        if (deve_ser_exibido) {
+            // selecionar dados da pesagem e colocar em uma linha
+            let linha = pesagem_para_linha(filtros.tipo_da_pesagem, pesagem)
+
+            // create html from linha
+            let html_linha = create_html_from_linha(linha)
+
+            let div_destino = document.getElementById('tabela')
+
+            // show data
+            div_destino.appendChild(html_linha) 
+        }
+
+    })
+}
+
+export let pesagem_satisfaz_filtros = (pesagem, filtros) => {
+    let pesagem_modificada
+    if (filtros.tipo_da_pesagem == 'Pesagens Fechadas') {
+        pesagem_modificada = pesagem.fechamento_da_pesagem
+    } else {
+        pesagem_modificada = pesagem
+    }
+    
+    let keys_a_serem_avaliadas = ['pessoa', 'placa', 'material', 'id_pesagem']
+
+    let satisfaz_todas_as_keys = true
+
+    // TODO:
+        // Aprimorar métrica para distanciar as palavras
+        // tornar não case sensitive
+        // tornar não space sensitive
+    
+    keys_a_serem_avaliadas.forEach( (item) => {
+        if (filtros.hasOwnProperty(item)) {
+            if (filtros[item] != "") {
+                if (filtros[item] != pesagem_modificada[item]) {
+                    satisfaz_todas_as_keys = false
+                }
+            }
+        } 
+    })
+    
+    // checar condição de data
+
+    // checar outras condições
+    return satisfaz_todas_as_keys
+}
+
+export let pesagem_para_linha = (tipo, pesagem) => {
+
+    // Tentativa de usar o design pattern strategy
+
+    // Nome gigantesco, mudar depois
+    let funcoes_que_retornam_as_informacoes_dependendo_do_tipo_da_pesagem = {
+        "Pesagens Fechadas": (pesagem) => {
+            let abertura = pesagem.abertura_da_pesagem
+            let fechamento = pesagem.fechamento_da_pesagem
+            let arr = [
+                fechamento.id_pesagem,
+                fechamento.pessoa,
+                fechamento.placa,
+                fechamento.material,
+                abertura.data_pesagem.string,
+                fechamento.data_pesagem.string
+            ]
+            return arr
+        },
+        "Pesagens Abertas": (pesagem) => {
+            let arr = [
+                pesagem.id_pesagem,
+                pesagem.pessoa,
+                pesagem.placa,
+                pesagem.material,
+                pesagem.data_pesagem.string
+            ]
+            return arr
+        },
+        "pesagem_em_lancamento": null
+    }
+
+    return funcoes_que_retornam_as_informacoes_dependendo_do_tipo_da_pesagem[tipo](pesagem)
+}
+
+export let create_html_from_linha = (linha) => {
+    let t_row = document.createElement('tr')
+    t_row.classList.add('linha-da-tabela-de-busca')
+
+    linha.forEach((item) => {
+        let t_cell = document.createElement('td')
+        t_cell.classList.add('celula')
+        
+        let span_in_cell = document.createElement('span')
+        span_in_cell.innerText = String(item)
+
+        t_cell.appendChild(span_in_cell)
+
+        t_row.appendChild(t_cell)
+    })
+
+    let click_na_linha = (id_pesagem) => {
+        alert(`A linha da pesagem ${id_pesagem} foi clicada!`)
+    }
+
+    t_row.addEventListener('click', () => click_na_linha(linha[0]))
+
+    return t_row
+}
+
+export let get_filtro = () => {
+    
+    // get strings from cells
+    let placa_value = document.querySelector('input#placa_cell').value
+    let pessoa_value = document.querySelector('input#pessoa_cell').value
+    let material_value = document.querySelector('input#material_cell').value
+
+    // sanitize strings
+
+    let filtro = {
+        tipo_da_pesagem: 'Pesagens Fechadas',
+        placa: placa_value,
+        pessoa: pessoa_value,
+        material: material_value
+    }
+
+    return filtro
+}
