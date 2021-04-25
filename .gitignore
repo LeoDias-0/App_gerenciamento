@@ -7,5 +7,5 @@ dados/
 # Variáveis
 variables/
 
-# app.js
-build\js\app.js
+# Build
+build/

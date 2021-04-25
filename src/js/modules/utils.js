@@ -586,7 +586,26 @@ function autocomplete_material(inp) {
 // Cria um elemento html que representa um ticket e adiciona no DOM
 // Muito complicada também, dá pra refatorar(deixar mais modular, talvez criar um 'objeto' ticket)
 export function adicionar_ticket_pesagem(args_value) {
+    // A intermediate_div está aqui principalmente para deixar o reactDOM no
+    // controle apenas de intermediate_div e não da div #tickets
+    // dessa forma não quebrando a manipulações nessa div que o código antigo faz
+    let intermediate_div = document.createElement('div')
+    intermediate_div.setAttribute('style', 'padding-bottom: 0.3cm; padding-right: 0.3cm;')
 
+    document.getElementById("tickets").appendChild(intermediate_div)
+
+    ReactDOM.render(
+        <Ticket
+        placa={args_value.placa}
+        pessoa={args_value.pessoa}
+        material={args_value.material}
+        />,
+        intermediate_div
+    )
+    // Mudaremos aos poucos dessa forma (até que só precisa de um render do ReactDOM em index.js)
+    // Esperamos que essa gambiarra não dure por muito tempo
+
+    /*
     let div_tickets = document.getElementById("tickets")
     let b = document.createElement("DIV")
 
@@ -672,7 +691,7 @@ export function adicionar_ticket_pesagem(args_value) {
     b.appendChild(pin_btn)
     b.appendChild(finalize_btn)
     
-
+    */
 }
 
 //  Lê no sistema as pesagens que estão abertas e carrega um ticket para cada uma delas
