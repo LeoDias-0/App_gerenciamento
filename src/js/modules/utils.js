@@ -28,7 +28,6 @@ let dados_cadastros = {}
 
 
 export function carregar_variaveis_do_sistema() {
-    console.log('This function is working!')
     let raw_data = fs.readFileSync('variables\\variaveis.json')
     numero_de_pesagens = JSON.parse(raw_data).numero_de_pesagens
 }
@@ -596,6 +595,7 @@ export function adicionar_ticket_pesagem(args_value) {
 
     ReactDOM.render(
         <Ticket
+        id_pesagem={args_value.id_pesagem}
         placa={args_value.placa}
         pessoa={args_value.pessoa}
         material={args_value.material}

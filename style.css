@@ -50,6 +50,8 @@ td {
 
 
 div.tickets_nao_selecionados {
+    cursor: pointer;
+    position: relative;
     width: 130px;
     height: 200px;
     font-family: sans-serif;
@@ -166,24 +168,25 @@ button#pesar_botao {
     width: 13cm;
 }
 
-.tickets_mini_buttons {
+.ticket_mini_button {
     position: absolute;
     width: 10px;
     height: 10px;
     top: 5px;
+    border-radius: 5px;
 }
 
-.ticket_close_button {
+.ticket_mini_button_close {
     right: 5px;
     background-color: red;
 }
 
-.ticket_pin_button {
+.ticket_mini_button_pin {
     right: 20px;
     background-color: yellow;
 }
 
-.ticket_finalize_button {
+.ticket_mini_button_minimize {
     right: 35px;
     background-color: green;
 }

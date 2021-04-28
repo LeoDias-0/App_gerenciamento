@@ -50,13 +50,15 @@ export let click_botao_balanca = (body_string_balanca) => {
             pessoa: pessoa_cell.value,
             material: material_cell.value,
             peso: peso_cell.value,
-            id_pesagem: utils.numero_de_pesagens
+            //id_pesagem: utils.numero_de_pesagens
+            id_pesagem: Math.floor(Math.random() * 10000)
         }
 
         let id_pesagem_em_questao = null
         
         let all_in_tickets = document.querySelector('#tickets')
         let selected_tickets = [...all_in_tickets.querySelectorAll('.ticket_selecionado')]
+
         let lidando_com_pesagem_aberta = selected_tickets.length > 0
         if (lidando_com_pesagem_aberta) id_pesagem_em_questao = selected_tickets[0].id
 
