@@ -58,14 +58,20 @@ div.tickets_nao_selecionados {
     font-size: large;
     text-align: center;
     background-color: rgb(146, 146, 146);
+    background-color: rgb(107, 107, 107);
     border-radius: 6px;
 }
 
 div.ticket_selecionado {
+    cursor: pointer;
+    position: relative;
+    width: 130px;
+    height: 200px;
     font-family: sans-serif;
     font-size: large;
     text-align: center;
     background-color: rgb(107, 107, 107);
+    background-color: rgb(146, 146, 146);
     border-radius: 6px;
 }
 

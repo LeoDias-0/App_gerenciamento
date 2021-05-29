@@ -44,16 +44,48 @@ export let click_botao_balanca = (body_string_balanca) => {
     // autocomplete_material(document.getElementById("material"))
 
 
-    pesar_botao.addEventListener('click', () => {
+    // Criando funções que mexem com o botão de pesagem (se para iniciar pesagem ou finalizar)
+    // Depois pensar se jogar ela pro utils
+    // Cria pesagem
+    function criar_pesagem() {
+        // Pega variáveis do sistema
+        let dict_variables = utils.carregar_variaveis_do_sistema()
+
         let data_values = {
             placa: placa_cell.value,
             pessoa: pessoa_cell.value,
             material: material_cell.value,
             peso: peso_cell.value,
-            //id_pesagem: utils.numero_de_pesagens
-            id_pesagem: Math.floor(Math.random() * 10000)
+            id_pesagem: dict_variables.numero_de_pesagens
         }
 
+        // Atualizar variáveis do sistema (por hora, número de pesagens)
+        dict_variables.numero_de_pesagens += 1
+        utils.escrever_variaveis_do_sistema(dict_variables)
+
+        // 'Adiciona' novas informações com o tempo da pesagem
+        data_values = utils.time_pesagem(data_values)
+
+        // Criar JSON com a pesagem
+        utils.gravar_pesagem(data_values)
+
+        // Adiciona ticket de pesagem no DOM
+        utils.adicionar_ticket_pesagem(data_values)
+    }
+
+    // Fecha pesagem
+    function fechar_pesagem() {
+
+    }
+
+    pesar_botao.addEventListener('click', () => {
+        
+        criar_pesagem()
+        
+
+
+
+        /* Antigo
         let id_pesagem_em_questao = null
         
         let all_in_tickets = document.querySelector('#tickets')
@@ -86,6 +118,7 @@ export let click_botao_balanca = (body_string_balanca) => {
             utils.escrever_variaveis_do_sistema()
         }
         utils.limpar_celulas()
+        */
     })
 
 
