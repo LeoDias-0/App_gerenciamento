@@ -2,8 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import Ticket from '../../react_js/components/Ticket'
+import EspacoTickets from '../../react_js/components/EspacoTickets'
+import FormularioPesagem from '../../react_js/components/FormularioPesagem'
+import EspacoAdicionarPesagem from '../../react_js/components/EspacoAdicionarPesagem'
+import Balanca from '../../react_js/components/Balanca'
 
 import {div_conteudo_principal} from '../modules/global'
+import PesarBotao from '../../react_js/components/PesarBotao'
 
 const fs = require('fs')
 
@@ -87,6 +92,21 @@ export function gravar_pesagem(timed_dados_pesagem) {
     let filename_pesagem = timed_dados_pesagem.pessoa + ' '
     filename_pesagem += timed_dados_pesagem.data_pesagem.string + ' id='
     filename_pesagem += timed_dados_pesagem.id_pesagem + '.json'
+
+    let to_be_write = JSON.stringify(timed_dados_pesagem, null, '\t')
+
+    fs.writeFile(path_pesagens_abertas + filename_pesagem, to_be_write, (err) => {
+        if (err) throw err
+    })
+}
+
+export function nova_gravar_pesagem(timed_dados_pesagem) {
+    
+    let path_pesagens_abertas = './dados/Pesagens Abertas/'
+
+    let filename_pesagem = timed_dados_pesagem['Pessoa'] + ' '
+    filename_pesagem += timed_dados_pesagem.data_pesagem.string + ' id='
+    filename_pesagem += timed_dados_pesagem['id_pesagem'] + '.json'
 
     let to_be_write = JSON.stringify(timed_dados_pesagem, null, '\t')
 
@@ -581,9 +601,46 @@ function autocomplete_material(inp) {
     })
 }
 
+export function carregar_balanca() {
 
-// Cria um elemento html que representa um ticket e adiciona no DOM
-// Muito complicada também, dá pra refatorar(deixar mais modular, talvez criar um 'objeto' ticket)
+    let tickets_pesagens_abertas = []
+
+    fs.readdirSync('dados\\Pesagens Abertas').forEach((file) => {
+        let raw_data_pesagem = fs.readFileSync('dados\\Pesagens Abertas\\' + file)
+        let pesagem = JSON.parse(raw_data_pesagem)
+        tickets_pesagens_abertas.push(pesagem)
+    })
+
+    ReactDOM.render(
+        <Balanca tickets_pesagens_abertas={tickets_pesagens_abertas} />,
+        document.querySelector("#conteudo_principal")
+    )
+}
+
+export function carregar_espaco_para_pesar() {
+    ReactDOM.render(
+        <EspacoAdicionarPesagem />,
+        document.querySelector('#local_para_adicionar_pesagem')
+    )
+}
+
+export function adicionar_formulario_de_pesagem() {
+    ReactDOM.render(
+        <FormularioPesagem/>,
+        document.querySelector('#local_para_formulario_pesagem')
+    )
+}
+
+export function adicionar_botao_pesar() {
+    ReactDOM.render(
+        <PesarBotao/>,
+        document.querySelector('#local_para_botao_pesar')
+    )
+}
+
+// Está sendo utilizada apenas pelo 'código legado' tendo em vista
+// que o 'espaço para tickets' é um componente React que já abriga
+// essas funcionalidades
 export function adicionar_ticket_pesagem(args_value) {
     // A intermediate_div está aqui principalmente para deixar o reactDOM no
     // controle apenas de intermediate_div e não da div #tickets
@@ -602,8 +659,6 @@ export function adicionar_ticket_pesagem(args_value) {
         />,
         intermediate_div
     )
-    // Mudaremos aos poucos dessa forma (até que só precisa de um render do ReactDOM em index.js)
-    // Esperamos que essa gambiarra não dure por muito tempo
 
     /*
     let div_tickets = document.getElementById("tickets")
@@ -692,6 +747,26 @@ export function adicionar_ticket_pesagem(args_value) {
     b.appendChild(finalize_btn)
     
     */
+}
+
+export function carregar_espaco_para_tickets() {
+
+    let tickets_pesagens_abertas = []
+
+    fs.readdirSync('dados\\Pesagens Abertas').forEach((file) => {
+        let raw_data_pesagem = fs.readFileSync('dados\\Pesagens Abertas\\' + file)
+        let pesagem = JSON.parse(raw_data_pesagem)
+        tickets_pesagens_abertas.push(pesagem)
+    })
+
+    // let intermediate_div = document.createElement('div')
+    // intermediate_div.setAttribute('style', 'padding-bottom: 0.3cm; padding-right: 0.3cm;')
+
+    // document.getElementById("tickets").appendChild(intermediate_div)
+    ReactDOM.render(
+        <EspacoTickets tickets_para_carregar={tickets_pesagens_abertas}/>,
+        document.querySelector('#local_para_tickets')
+    )
 }
 
 //  Lê no sistema as pesagens que estão abertas e carrega um ticket para cada uma delas

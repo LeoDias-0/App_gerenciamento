@@ -1,6 +1,8 @@
 import * as utils from './utils'
 import {div_conteudo_principal, botao_balanca, botao_pesagens_fechadas} from './global'
 
+import ReactDOM from 'react-dom'
+
 
 export let click_botao_balanca = (body_string_balanca) => {
     // o método .children retorn um HTML Collection ao invés de um array
@@ -12,7 +14,19 @@ export let click_botao_balanca = (body_string_balanca) => {
     botao_balanca.className = 'active'
     
     div_conteudo_principal.innerHTML = ''
-    div_conteudo_principal.innerHTML = body_string_balanca
+    // div_conteudo_principal.innerHTML = body_string_balanca
+
+    let {placas, pessoas, materiais} = utils.ler_dados_gravados()
+
+    let numero_de_pesagens = 1
+
+    utils.carregar_balanca()
+
+    // utils.autocomplete(document.getElementById("placa"), placas)
+
+    // utils.autocomplete(document.getElementById("pessoa"), pessoas)
+
+    // utils.autocomplete(document.getElementById("material"), materiais)
 
     let placa_cell = document.querySelector('#placa')
     let pessoa_cell = document.querySelector('#pessoa')
@@ -23,27 +37,7 @@ export let click_botao_balanca = (body_string_balanca) => {
     let adc_nome_botao = document.querySelector('#adicionar_nome')
     let adc_material_botao = document.querySelector('#adicionar_material')
 
-    let {placas, pessoas, materiais} = utils.ler_dados_gravados()
-
-    let numero_de_pesagens = 1
-
-    utils.carregar_tickets_para_pesagens_abertas()
-
-    // O autocomplete está funcionando(?!) sem a necessidade de criar uma
-    // função pra cada input
-    utils.autocomplete(document.getElementById("placa"), placas)
-
-    utils.autocomplete(document.getElementById("pessoa"), pessoas)
-
-    utils.autocomplete(document.getElementById("material"), materiais)
-
-    // autocomplete_placa(document.getElementById("placa"))
-
-    // autocomplete_pessoa(document.getElementById("pessoa"))
-
-    // autocomplete_material(document.getElementById("material"))
-
-
+    /*
     pesar_botao.addEventListener('click', () => {
         let data_values = {
             placa: placa_cell.value,
@@ -87,8 +81,9 @@ export let click_botao_balanca = (body_string_balanca) => {
         }
         utils.limpar_celulas()
     })
+    */
 
-
+    /*
     adc_placa_botao.addEventListener('click', () => {
         modal_placa = document.querySelector('#modal_adicionar_placa')
         modal_placa_context = document.querySelector('#input_adicionar_placa')
@@ -109,6 +104,7 @@ export let click_botao_balanca = (body_string_balanca) => {
         modal_material_context.value = material_cell.value
         modal_material.style.display = 'block'
     })
+    */
 
 }
 

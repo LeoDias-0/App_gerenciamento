@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-import ReactDOM from 'react-dom'
 
 
 export default (props) => {
+    /*
     let handleClick = () => {
         console.log(`Clicou no botão de fechar ticket! da pesagem ${props.id_pesagem}!`)
         let intermediate_ticket_div = document.querySelector(`#ticket_pesagem_${props.id_pesagem}`).parentNode
@@ -26,10 +26,10 @@ export default (props) => {
         }
 
       }, []) // Essa lista vazia tem explicação
-
+    */
+    
     return (
-        <div className="ticket_mini_button ticket_mini_button_close" id={`pesagem_${props.id_pesagem}`}>
-
+        <div onClick={props.remove_ticket} className="ticket_mini_button ticket_mini_button_close">
         </div>
     )
 }
