@@ -27,8 +27,6 @@ export default (props) => {
         }
     }
 
-    useEffect(() => {console.log(selectedTicket)}, [selectedTicket])
-
     let renderPesagem = (args_value) => {
         return (
             <div className='intermediate_div_tickes' key={args_value.id_pesagem}>

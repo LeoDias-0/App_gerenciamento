@@ -34,8 +34,6 @@ export default (props) => {
 
     const [selectedTicket, setSelectedTicket] = useState(-1)
 
-    setSelectedTicket(prev => prev + 1)
-
     const [tickets, setTickets] = useState(props.tickets_pesagens_abertas)
 
     let info_to_provide = {
