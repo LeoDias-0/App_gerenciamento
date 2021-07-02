@@ -33,24 +33,19 @@ let dados_cadastros = {}
 
 
 export function carregar_variaveis_do_sistema() {
-
-    // Essa função retorna as variáveis do sistema
     let raw_data = fs.readFileSync('variables\\variaveis.json')
-    // numero_de_pesagens = JSON.parse(raw_data).numero_de_pesagens  // Antiga atualização do número de pesagens
-    let dict_variables = JSON.parse(raw_data)
-    return dict_variables
+    numero_de_pesagens = JSON.parse(raw_data).numero_de_pesagens
 }
 
 
-export function escrever_variaveis_do_sistema(data) {
-
-    // Atualiza (escreve) o novo número e pesagens
-    fs.writeFileSync('variables\\variaveis.json', JSON.stringify(data, null, '\t'))
+export function escrever_variaveis_do_sistema() {
+    let data = {}
+    data.numero_de_pesagens = numero_de_pesagens
+    fs.writeFileSync('variables\\variaveis.json', JSON.stringify(data))
 }
 
 
 export function ler_dados_gravados() {
-
     let cadastro_PATH = 'dados\\Cadastros\\'
 
     pessoas = fs.readFileSync(cadastro_PATH + 'Clientes\\nomes.txt', 'utf-8').split('\n').filter(Boolean)
@@ -63,8 +58,6 @@ export function ler_dados_gravados() {
 }
 
 export function time_pesagem(dados_pesagem) {
-
-    // Cria novo dicionário com as informações do tempo
     let dt = new Date()
 
     let dia = String(dt.getDate())
@@ -83,6 +76,7 @@ export function time_pesagem(dados_pesagem) {
         segundo: segundo
     }
     
+
     let string_date = dia + '-' + mes + '-' + ano
     let string_time = hora + 'h' + minuto + 'min' + segundo + 's'
 
@@ -92,9 +86,6 @@ export function time_pesagem(dados_pesagem) {
 }
 
 export function gravar_pesagem(timed_dados_pesagem) {
-    /*
-    Recebe os dados da pesagem, já com o tempo adicionado, e grava um arquivo JSON com esses dados
-    */
     
     let path_pesagens_abertas = './dados/Pesagens Abertas/'
 
