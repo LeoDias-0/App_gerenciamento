@@ -47,13 +47,7 @@ td {
     padding: 5px;
 }
 
-#tickets {
-    position: absolute;
-    right: 0%;
-    left: 0%;
-    display: flex;
-    flex-wrap: wrap;
-}
+
 
 div.tickets_nao_selecionados {
     cursor: pointer;
@@ -64,6 +58,7 @@ div.tickets_nao_selecionados {
     font-size: large;
     text-align: center;
     background-color: rgb(146, 146, 146);
+    background-color: rgb(107, 107, 107);
     border-radius: 6px;
 }
 
@@ -75,7 +70,8 @@ div.ticket_selecionado {
     font-family: sans-serif;
     font-size: large;
     text-align: center;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(107, 107, 107);
+    background-color: rgb(146, 146, 146);
     border-radius: 6px;
 }
 
@@ -222,46 +218,4 @@ button#pesar_botao {
 .vertical-menu div.active {
     background-color: #4CAF50; /* Add a green color to the "active/current" link */
     color: white;
-}
-
-
-
-.intermediate_div_tickes {
-    padding-bottom: 0.3cm;
-    padding-right: 0.3cm;
-}
-
-
-div.formulario {
-    font-size: 13px;
-    line-height: 1.8;
-    color: #222;
-    font-weight: 400;
-    margin-bottom: 23px;
-    position: relative;
-    width: 50%;
-    padding: 0 15px;
-}
-
-label.formulario {
-    line-height: 1.8;
-    color: #222;
-    font-size: 14px;
-    font-weight: 700;
-    font-family: montserrat;
-    margin-bottom: 2px;
-    display: block;
-}
-
-input.formulario {
-    outline: none;
-    -webkit-appearance: unset!important;
-    display: block;
-    width: 100%;
-    border: 1px solid #ebebeb;
-    padding: 11px 20px;
-    box-sizing: border-box;
-    font-family: montserrat;
-    font-weight: 500;
-    font-size: 13px;
 }
