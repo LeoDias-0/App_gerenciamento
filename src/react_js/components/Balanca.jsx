@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
 import { ProviderBalanca } from './ContextBalanca'
 import EspacoAdicionarPesagem from './EspacoAdicionarPesagem'
@@ -29,12 +29,31 @@ export default (props) => {
         'Placa': '',
         'Pessoa': '',
         'Material': '',
-        'Peso': '',
+        'Peso': ''
     })
 
     const [selectedTicket, setSelectedTicket] = useState(-1)
 
     const [tickets, setTickets] = useState(props.tickets_pesagens_abertas)
+
+    let remove_ticket = (ticket_id) => {
+        let tickets_com_a_exclusao_feita = tickets.filter(ticket => ticket.id_pesagem != ticket_id)
+
+        setTickets(tickets_com_a_exclusao_feita)
+    }
+
+    useEffect(() => {
+        console.log("ativação")
+        if (selectedTicket <= -1) {
+            setInfoFormulario({
+            'Placa': '',
+            'Pessoa': '',
+            'Material': '',
+            'Peso': ''
+            })
+            setSelectedTicket(-1)  // TODO: Ver se tem algum jeito menos redundante de resolver
+    }
+    }, [selectedTicket])
 
     let info_to_provide = {
         infoFormulario: infoFormulario,
@@ -42,11 +61,9 @@ export default (props) => {
         selectedTicket: selectedTicket,
         setSelectedTicket: setSelectedTicket,
         tickets: tickets,
-        setTickets: setTickets
+        setTickets: setTickets,
+        remove_ticket: remove_ticket
     }
-
-
-
 
     return (
         <>

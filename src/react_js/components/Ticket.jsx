@@ -14,7 +14,7 @@ export default (props) => {
     return (
         // TODO: Adicionar um selector css próprio para identificar o ticket
         <div onClick={props.select_or_unselect_ticket} className={classes_of_ticket()}>
-            <TicketCloseMiniButton remove_ticket={props.remove_ticket}/>
+            <TicketCloseMiniButton/>
             <div className="ticket_mini_button ticket_mini_button_pin"></div>
             <div className="ticket_mini_button ticket_mini_button_minimize"></div>
             <br />

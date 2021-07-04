@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import BotaoAdicionarInfo from './BotaoAdicionarInfo'
 
-import MiniFormAutoComplete from './MiniFormAutoComplete'
 import ContextBalanca from './ContextBalanca'
 
 
@@ -13,6 +12,8 @@ export default (props) => {
     const [peso, setPeso] = useState('')
 
     let {infoFormulario, setInfoFormulario} = useContext(ContextBalanca)
+
+    // TODO: Estudar Controlled Components
 
     useEffect(() => {
         setInfoFormulario({
@@ -28,7 +29,6 @@ export default (props) => {
         setPessoa(infoFormulario['Pessoa']),
         setMaterial(infoFormulario['Material']),
         setPeso(infoFormulario['Peso'])
-        console.log(infoFormulario)
     }, [infoFormulario])
 
     let onChangePlaca = e => {
@@ -41,6 +41,7 @@ export default (props) => {
     }
 
     return (
+        // TODO: Usar um controled component para melhorar a estruturação desta parte do formulário
         <form autoComplete="off">
         <table style={{margin: '0 auto'}}>
             <tbody>

@@ -9,3 +9,5 @@ variables/
 
 # Build
 build/
+
+.vsls.json
