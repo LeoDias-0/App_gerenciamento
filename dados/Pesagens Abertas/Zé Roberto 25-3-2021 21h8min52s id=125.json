@@ -1,8 +1,8 @@
 {
-	"placa": "ABC2503",
-	"pessoa": "Zé Roberto",
-	"material": "Guilhotina",
-	"peso": "8001",
+	"Placa": "ABC2503",
+	"Pessoa": "Zé Roberto",
+	"Material": "Guilhotina",
+	"Peso": "8001",
 	"id_pesagem": 125,
 	"data_pesagem": {
 		"dia": "25",
