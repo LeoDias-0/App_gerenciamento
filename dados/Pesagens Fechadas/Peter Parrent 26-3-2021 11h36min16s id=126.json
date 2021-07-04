@@ -1,9 +1,9 @@
 {
 	"abertura_da_pesagem": {
-		"placa": "AAA0000",
-		"pessoa": "Peter Parrent",
-		"material": "Aluminum",
-		"peso": "195",
+		"Placa": "AAA0000",
+		"Pessoa": "Peter Parrent",
+		"Material": "Aluminum",
+		"Peso": "195",
 		"id_pesagem": 126,
 		"data_pesagem": {
 			"dia": "25",
@@ -16,10 +16,10 @@
 		}
 	},
 	"fechamento_da_pesagem": {
-		"placa": "AAA0000",
-		"pessoa": "Peter Parrent",
-		"material": "Aluminum",
-		"peso": "194",
+		"Placa": "AAA0000",
+		"Pessoa": "Peter Parrent",
+		"Material": "Aluminum",
+		"Peso": "194",
 		"id_pesagem": "126",
 		"data_pesagem": {
 			"dia": "26",
